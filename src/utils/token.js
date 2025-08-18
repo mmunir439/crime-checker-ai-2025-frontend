@@ -30,3 +30,19 @@ export function setAxiosAuthToken(token) {
     delete axios.defaults.headers.common["Authorization"];
   }
 }
+
+// Decode token to extract payload
+import jwtDecode from "jwt-decode";
+
+export function decodeToken() {
+  const token = getToken();
+  if (token) {
+    try {
+      return jwtDecode(token); // Decode the token and return the payload
+    } catch (error) {
+      console.error("Invalid token:", error);
+      return null;
+    }
+  }
+  return null;
+}

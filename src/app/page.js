@@ -1,10 +1,12 @@
-import Image from "next/image";
-
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Heorsection";
 export default function Home() {
   return (
-   <div>
-      <h1 className="h1">add your only componnets in here s</h1>  
-  <h1>add your only componnets in here s</h1>  
-   </div>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <Hero/>
+     <Footer/>
+    </div>
   );
 }
