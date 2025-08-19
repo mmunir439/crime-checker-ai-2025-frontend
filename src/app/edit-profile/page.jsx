@@ -10,8 +10,8 @@ export default function EditProfile() {
     password: "",
     cnic: "",
   });
-  const [loading, setLoading] = useState(false); // State to track loading
-  const [successMessage, setSuccessMessage] = useState(""); // State to track success message
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function EditProfile() {
         setFormData({
           username: response.data[0]?.username || "",
           email: response.data[0]?.email || "",
-          password: "", // Leave password empty initially
+          password: "",
           cnic: response.data[0]?.cnic || "",
         });
       } catch (error) {
@@ -40,59 +40,115 @@ export default function EditProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when the process starts
+    setLoading(true);
     try {
-      const response = await axios.put("/user/updateuser", formData); // Use PUT for updating user data
-      setSuccessMessage(response.data.message || "Profile updated successfully!"); // Set success message
+      const response = await axios.put("/user/updateuser", formData);
+      setSuccessMessage(response.data.message || "Profile updated successfully!");
       setTimeout(() => {
-        setSuccessMessage(""); // Clear the message after 3 seconds
-        router.push("/"); // Redirect to home page
+        setSuccessMessage("");
+        router.push("/");
       }, 3000);
     } catch (error) {
       console.error("Error:", error);
       alert(error.response?.data?.message || "Profile update failed!");
     } finally {
-      setLoading(false); // Set loading to false when the process ends
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "auto", padding: "20px", background: "#f9f9f9", borderRadius: "8px", fontFamily: "sans-serif" }}>
-      <h1 style={{ textAlign: "center", color: "#2d6cdf" }}>Edit Profile</h1>
-      {successMessage && (
-        <p style={{ textAlign: "center", color: "green", fontSize: "16px", marginBottom: "20px" }}>
-          {successMessage}
-        </p>
-      )}
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="username">Username</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
-
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="email">Email</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="password">Password (Optional)</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="password" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Leave blank to keep current password" />
-
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="cnic">CNIC</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="text" id="cnic" name="cnic" value={formData.cnic} onChange={handleChange} required />
-
-        <button
-          style={{
-            background: loading ? "#ccc" : "#2d6cdf", // Change color when loading
-            color: "#fff",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            fontSize: "16px",
-            cursor: loading ? "not-allowed" : "pointer", // Disable cursor when loading
-            border: "none",
-          }}
-          type="submit"
-          disabled={loading} // Disable button when loading
-        >
-          {loading ? "Updating..." : "Update"} {/* Show text based on loading state */}
-        </button>
-      </form>
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-green-500 flex items-center justify-center p-6">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
+          Edit Profile
+        </h1>
+        {successMessage && (
+          <p className="text-center text-green-600 font-medium mb-4">
+            {successMessage}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Password (Optional)
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Leave blank to keep current password"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="cnic"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              CNIC
+            </label>
+            <input
+              type="text"
+              id="cnic"
+              name="cnic"
+              value={formData.cnic}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full p-3 text-white font-medium rounded-lg ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 transition duration-300"
+            }`}
+          >
+            {loading ? "Updating..." : "Update"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import axios from "@/utils/axios"; // Import the axios instance
 import Link from "next/link";
+import axios from "@/utils/axios";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -11,7 +11,7 @@ export default function Register() {
     password: "",
     cnic: "",
   });
-  const [loading, setLoading] = useState(false); // State to track loading
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -21,51 +21,112 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when the process starts
+    setLoading(true);
     try {
-      const response = await axios.post("/user/registeruser", formData); // Use axios for the POST request
+      const response = await axios.post("/user/registeruser", formData);
       alert(response.data.message || "Registration successful!");
-      router.push("/login"); // Redirect to login page after successful registration
+      router.push("/login");
     } catch (error) {
-      console.error("Error:", error);
       alert(error.response?.data?.message || "Registration failed!");
     } finally {
-      setLoading(false); // Set loading to false when the process ends
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "600px", margin: "auto", padding: "20px", background: "#f9f9f9", borderRadius: "8px", fontFamily: "sans-serif" }}>
-      <h1 style={{ textAlign: "center", color: "#2d6cdf" }}>Register</h1>
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column" }}>
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="username">Username</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
-
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="email">Email</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="password">Password</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
-        <label style={{ fontSize: "16px", color: "#333", marginBottom: "5px" }} htmlFor="cnic">CNIC</label>
-        <input style={{ padding: "10px", marginBottom: "15px", border: "1px solid #ccc", borderRadius: "5px", fontSize: "14px" }} type="text" id="cnic" name="cnic" value={formData.cnic} onChange={handleChange} required />
-
-        <button
-          style={{
-            background: loading ? "#ccc" : "#2d6cdf", // Change color when loading
-            color: "#fff",
-            padding: "10px 20px",
-            borderRadius: "5px",
-            fontSize: "16px",
-            cursor: loading ? "not-allowed" : "pointer", // Disable cursor when loading
-            border: "none",
-          }}
-          type="submit"
-          disabled={loading} // Disable button when loading
-        >
-          {loading ? "Registering..." : "Register"} {/* Show text based on loading state */}
-        </button>
-        <p>if you don't have account <Link href="/login">Login</Link></p>
-      </form>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 p-6">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+        <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
+          Register
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="cnic"
+              className="block text-gray-700 font-medium mb-1"
+            >
+              CNIC
+            </label>
+            <input
+              type="text"
+              id="cnic"
+              name="cnic"
+              value={formData.cnic}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full p-3 text-white font-medium rounded-lg ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 transition duration-300"
+            }`}
+          >
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
+        <p className="text-center text-gray-600 mt-4">
+          Already have an account?{" "}
+          <Link href="/login" className="text-blue-600 hover:underline">
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import axios from "@/utils/axios";
 import { MdDelete } from "react-icons/md";
 import { FaPen } from "react-icons/fa";
 import Link from "next/link";
+
 export default function UserDashboard() {
   const [userData, setUserData] = useState([]);
   const [crimeData, setCrimeData] = useState([]);
@@ -34,139 +35,73 @@ export default function UserDashboard() {
   }, []);
 
   return (
-    <div
-      className="user-dashboard bg-[#e6f3c2] min-h-screen w-full"
-      style={{
-        fontFamily: "Arial, sans-serif",
-        padding: "20px",
-        maxWidth: "1200px",
-        margin: "auto",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#2d6cdf",
-          marginBottom: "20px",
-          fontSize: "2.5rem",
-        }}
-      >
+    <div className="bg-gradient-to-r from-blue-500 to-green-500 min-h-screen p-6">
+      <h1 className="text-4xl font-bold text-white text-center mb-10">
         User Dashboard
       </h1>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          flexDirection: "row",
-          gap: "20px",
-        }}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {userData.length > 0 ? (
           userData.map((user) => (
             <div
               key={user.id}
-              style={{
-                flex: "1 1 300px",
-                padding: "20px",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                background: "#f9f9f9",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              }}
+              className="bg-white shadow-lg rounded-lg p-6 transform transition duration-500 hover:scale-105 hover:shadow-2xl"
             >
-              <h2
-                style={{
-                  color: "#333",
-                  marginBottom: "10px",
-                  fontSize: "1.5rem",
-                }}
-              >
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
                 Welcome, {user.username}
               </h2>
-              <Link href={`/edit-profile`}>
-                Edit profile
-                <FaPen style={{ color: "blue", fontSize: "20px", width: "20px", height: "20px" }} />
-              </Link>
-              <Link href={`/delete-profile`}>
-                 delete profile
-                <MdDelete style={{ color: "red", fontSize: "20px", width: "20px", height: "20px" }} />
-              </Link>
-              <p style={{ marginBottom: "10px", fontSize: "1rem" }}>
+              <p className="text-gray-600 mb-4">
                 <strong>Email:</strong> {user.email}
               </p>
+              <div className="flex justify-between items-center">
+                <Link
+                  href={`/edit-profile`}
+                  className="text-blue-600 hover:underline flex items-center gap-2"
+                >
+                  Edit Profile <FaPen />
+                </Link>
+                <Link
+                  href={`/delete-profile`}
+                  className="text-red-600 hover:underline flex items-center gap-2"
+                >
+                  Delete Profile <MdDelete />
+                </Link>
+              </div>
             </div>
           ))
         ) : (
-          <p
-            style={{
-              textAlign: "center",
-              color: "#333",
-              fontSize: "1.2rem",
-              marginTop: "20px",
-            }}
-          >
-            Loading user data...
-          </p>
+          <p className="text-center text-white text-lg">Loading user data...</p>
         )}
       </div>
-      <div
-        style={{
-          marginTop: "40px",
-          padding: "20px",
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          background: "#f9f9f9",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <h2
-          style={{
-            textAlign: "center",
-            color: "#333",
-            marginBottom: "20px",
-            fontSize: "2rem",
-          }}
-        >
+
+      <div className="mt-10 bg-white shadow-lg rounded-lg p-6">
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
           Criminal Records
         </h2>
         {crimeData.length > 0 ? (
           crimeData.map((crime) => (
             <div
               key={crime._id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "20px",
-                gap: "20px",
-              }}
+              className="flex items-center gap-6 mb-6 bg-gray-100 p-4 rounded-lg shadow-md"
             >
               <img
                 src={crime.photo}
                 alt={crime.name}
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "8px",
-                  objectFit: "cover",
-                }}
+                className="w-24 h-24 rounded-lg object-cover"
               />
               <div>
-                <h3 style={{ color: "#333", fontSize: "1.5rem" }}>
+                <h3 className="text-lg font-bold text-gray-800">
                   Crime ID: {crime._id}
                 </h3>
-                <p style={{ fontSize: "1rem", marginBottom: "5px" }}>
+                <p className="text-gray-600">
                   <strong>Crime Type:</strong> {crime.crimeType}
                 </p>
               </div>
             </div>
           ))
         ) : (
-          <div style={{ textAlign: "center" }}>
-            <h3 style={{ color: "#333", fontSize: "1.5rem" }}>MY CrimeStatus</h3>
-            <p style={{ fontSize: "1rem", color: "#666" }}>
-              No Crime Data Available
-            </p>
+          <div className="text-center">
+            <h3 className="text-lg font-bold text-gray-800">My Crime Status</h3>
+            <p className="text-gray-600">No Crime Data Available</p>
           </div>
         )}
       </div>
