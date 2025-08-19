@@ -32,7 +32,8 @@ export function setAxiosAuthToken(token) {
 }
 
 // Decode token to extract payload
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+
 
 export function decodeToken() {
   const token = getToken();

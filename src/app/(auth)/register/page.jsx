@@ -1,10 +1,11 @@
 "use client";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "@/utils/axios";
 
 export default function Register() {
+  const [successful,setSuccessful]=useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -24,10 +25,11 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post("/user/registeruser", formData);
-      alert(response.data.message || "Registration successful!");
+      console.log(response.data.message || "Registration successful!");
+      setSuccessful(response.data.message || "Registration successful!");
       router.push("/login");
     } catch (error) {
-      alert(error.response?.data?.message || "Registration failed!");
+      setSuccessful(error.response?.data?.message || "Registration failed!");
     } finally {
       setLoading(false);
     }
@@ -37,8 +39,21 @@ export default function Register() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-500 p-6">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md transform transition duration-500 hover:scale-105 hover:shadow-2xl">
         <h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
-          Register
-        </h1>
+  Register
+</h1>
+
+{successful && (
+  <div
+    className={`text-center mb-4 p-3 rounded-md ${
+      successful.toLowerCase().includes("success")
+        ? "bg-green-100 text-green-700"
+        : "bg-red-100 text-red-700"
+    }`}
+  >
+    {successful}
+  </div>
+)}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
