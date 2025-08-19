@@ -1,8 +1,7 @@
 import axios from "axios";
 import { getToken } from "./token";
-
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL, // Use environment variable for the backend URL
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL, // Ensure NEXT_PUBLIC_ prefix is used
 });
 
 instance.interceptors.request.use(

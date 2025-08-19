@@ -73,18 +73,17 @@ export default function Admin() {
     }
   };
 
-  // Handle delete criminal
-  const handleDelete = async (cnic) => {
-    try {
-      const response = await axios.delete(`/criminals/deleteCriminalByCNIC/${cnic}`);
-      setMessage("Criminal deleted successfully!");
-      getCriminals(); // Refresh the list
-    } catch (error) {
-      console.error("Error deleting criminal:", error);
-      setMessage("Failed to delete criminal.");
-    }
-  };
-
+// Example: Remove unused response
+const handleDelete = async (cnic) => {
+  try {
+    await axios.delete(`/criminals/deleteCriminalByCNIC/${cnic}`);
+    setMessage("Criminal deleted successfully!");
+    getCriminals(); // Refresh the list
+  } catch (error) {
+    console.error("Error deleting criminal:", error);
+    setMessage("Failed to delete criminal.");
+  }
+};
   // Handle edit criminal
   const handleEdit = (criminal) => {
     setEditMode(true);

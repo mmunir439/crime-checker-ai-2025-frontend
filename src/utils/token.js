@@ -32,7 +32,7 @@ export function setAxiosAuthToken(token) {
 }
 
 // ✅ Fix applied here with named import
-import { jwtDecode } from "jwt-decode";
+import { decode as jwtDecode } from "jwt-decode"; // Use named import
 
 // Decode token to extract payload
 export function decodeToken() {
